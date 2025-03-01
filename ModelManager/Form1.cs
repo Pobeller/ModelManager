@@ -88,7 +88,7 @@ namespace ModelManager
             //ScanAllGGUFModels();
 
             // Nach dem Scan sortieren
-            lvModelle.ListViewItemSorter = new ListViewItemComparer(0); // Kein Cast notwendig
+            //lvModelle.ListViewItemSorter = new ListViewItemComparer1(0); // Kein Cast notwendig
 
             lvModelle.Sort();
         }
@@ -822,6 +822,8 @@ if __name__ == ""__main__"":
             //prompt = "Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"
             //image = pipe(prompt).images[0]
 
+            // Mein private async Task RunPythonScriptAsync aufruf darf nicht angerührt werden
+            //Benenne die Methode um in RunBasicScriptAsync
 
 
 
@@ -1606,15 +1608,135 @@ Output: {parameters["output"]}";
         private void lvModelle_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             // Sortiere die ListView nach der angeklickten Spalte
-            lvModelle.ListViewItemSorter = new ListViewItemComparer(e.Column);
-            lvModelle.Sort();  //Er muss auf und absteigend sortiern können
+            var currentOrder = lvModelle.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+            lvModelle.ListViewItemSorter = new ListViewItemComparer(e.Column, currentOrder);
+            lvModelle.Sort();
         }
 
 
 
 
+        private async void btKategorisierer_Click(object sender, EventArgs e)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://huggingface.co/api/models/");
 
+                foreach (ListViewItem item in lvModelle.Items)
+                {
+                    // Setze das aktuelle Item als ausgewählt
+                    item.Selected = true;
+                    lvModelle.Select();
+                    //Die davor selecteten items werden deselektiert
+                    // Setze das aktuelle Item als ausgewählt
+                    item.Selected = true;
+                    // Ein Scroll to Caret wäre hier sinnvoll
+                    lvModelle.EnsureVisible(item.Index);
+                    lvModelle.Select();
+                    // Die davor ausgewählten Items werden deselektiert
+                    foreach (ListViewItem selectedItem in lvModelle.SelectedItems)
+                    {
+                        if (selectedItem != item)
+                        {
+                            selectedItem.Selected = false;
+                        }
+                    }
+                    string repoId = item.SubItems[0].Text;
 
+                    try
+                    {
+                        HttpResponseMessage response = await client.GetAsync(repoId);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonResponse = await response.Content.ReadAsStringAsync();
+                            dynamic? modelInfo = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonResponse);
+
+                            if (modelInfo != null)
+                            {
+                                string taskType = modelInfo.pipeline_tag ?? "Unbekannt";
+
+                                string category = taskType switch
+                                {
+                                    var t when t.Contains("text-to-image") => "Text-to-Image",
+                                    var t when t.Contains("text-to-speech") => "Text-to-Speech",
+                                    var t when t.Contains("text-to-video") => "Text-to-Video",
+                                    var t when t.Contains("text-to-animation") => "Text-to-Animation",
+                                    var t when t.Contains("image-classification") => "Image Classification",
+                                    var t when t.Contains("text-generation") => "Text Generation",
+                                    var t when t.Contains("object-detection") => "Object Detection",
+                                    var t when t.Contains("image-segmentation") => "Image Segmentation",
+                                    var t when t.Contains("question-answering") => "Question Answering",
+                                    var t when t.Contains("summarization") => "Summarization",
+                                    var t when t.Contains("translation") => "Translation",
+                                    var t when t.Contains("speech-recognition") => "Speech Recognition",
+                                    var t when t.Contains("text-to-text") => "Text-to-Text",
+                                    _ => "Unbekannt"
+                                };
+
+                                if (item.SubItems.Count <= 7)
+                                {
+                                    item.SubItems.Add(category);
+                                }
+                                else
+                                {
+                                    item.SubItems[7].Text = category;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            item.SubItems[7].Text = "Fehler beim Abrufen";
+                        }
+
+                        await Task.Delay(2000); // 2 Sekunden Pause zwischen den Anfragen
+                    }
+                    catch (Exception ex)
+                    {
+                        item.SubItems[7].Text = $"Fehler: {ex.Message}";
+                    }
+                }
+            }
+        }
+
+        private async void btDownloadModelBeta_Click(object sender, EventArgs e)
+        {
+            
+
+            string modelName = cbHFRepoId.Text; // Element aus cbHFRepoId.Text herunterladen
+            string scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "download_model.py");
+                       
+
+            var psi = new ProcessStartInfo
+            {
+                FileName = "python",
+                Arguments = $"\"{scriptPath}\" \"{modelName}\"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (var process = new Process { StartInfo = psi })
+            {
+                process.Start();
+                string output = await process.StandardOutput.ReadToEndAsync();
+                string error = await process.StandardError.ReadToEndAsync();
+                process.WaitForExit();
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    MessageBox.Show($"Fehler: {error}");
+                }
+                else
+                {
+                    MessageBox.Show(output);
+                }
+            }
+
+            try {  }
+            catch (Exception ex) { MessageBox.Show($"Löschfehler: {ex.Message}"); }
+
+        }
 
 
     }

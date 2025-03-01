@@ -66,6 +66,9 @@
             nudSpeed = new NumericUpDown();
             nudPitch = new NumericUpDown();
             cbPrecision = new ComboBox();
+            btKategorisierer = new Button();
+            btDownloadModelBeta = new Button();
+            cbHFRepoId = new ComboBox();
             contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudSeed).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudNumSteps).BeginInit();
@@ -144,7 +147,7 @@
             // 
             // btSendCommand
             // 
-            btSendCommand.Location = new Point(1287, 488);
+            btSendCommand.Location = new Point(152, 996);
             btSendCommand.Name = "btSendCommand";
             btSendCommand.Size = new Size(75, 23);
             btSendCommand.TabIndex = 3;
@@ -214,7 +217,7 @@
             // 
             // btStartBasicScript
             // 
-            btStartBasicScript.Location = new Point(1180, 488);
+            btStartBasicScript.Location = new Point(152, 965);
             btStartBasicScript.Name = "btStartBasicScript";
             btStartBasicScript.Size = new Size(101, 23);
             btStartBasicScript.TabIndex = 9;
@@ -234,7 +237,7 @@
             // 
             // btFormatListe
             // 
-            btFormatListe.Location = new Point(1492, 489);
+            btFormatListe.Location = new Point(285, 965);
             btFormatListe.Name = "btFormatListe";
             btFormatListe.Size = new Size(75, 23);
             btFormatListe.TabIndex = 11;
@@ -246,7 +249,7 @@
             // 
             cbBaseModel.FormattingEnabled = true;
             cbBaseModel.Items.AddRange(new object[] { "fluently/Fluently-XL-v2", "sd-community/sdxl-flash", "stabilityai/sdxl-turbo", "stabilityai/stable-diffusion-xl-base-1.0" });
-            cbBaseModel.Location = new Point(1434, 753);
+            cbBaseModel.Location = new Point(1436, 972);
             cbBaseModel.Name = "cbBaseModel";
             cbBaseModel.Size = new Size(247, 23);
             cbBaseModel.TabIndex = 12;
@@ -255,7 +258,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(1434, 735);
+            label1.Location = new Point(1436, 954);
             label1.Name = "label1";
             label1.Size = new Size(71, 15);
             label1.TabIndex = 13;
@@ -265,7 +268,7 @@
             // 
             status_label.AutoSize = true;
             status_label.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            status_label.Location = new Point(1391, 946);
+            status_label.Location = new Point(51, 958);
             status_label.Name = "status_label";
             status_label.Size = new Size(65, 30);
             status_label.TabIndex = 14;
@@ -273,7 +276,7 @@
             // 
             // btnGenerateModelInfo
             // 
-            btnGenerateModelInfo.Location = new Point(1408, 967);
+            btnGenerateModelInfo.Location = new Point(378, 940);
             btnGenerateModelInfo.Name = "btnGenerateModelInfo";
             btnGenerateModelInfo.Size = new Size(255, 23);
             btnGenerateModelInfo.TabIndex = 15;
@@ -283,7 +286,7 @@
             // 
             // btHtmlReportAnzeigen
             // 
-            btHtmlReportAnzeigen.Location = new Point(1408, 996);
+            btHtmlReportAnzeigen.Location = new Point(378, 969);
             btHtmlReportAnzeigen.Name = "btHtmlReportAnzeigen";
             btHtmlReportAnzeigen.Size = new Size(252, 23);
             btHtmlReportAnzeigen.TabIndex = 16;
@@ -295,7 +298,7 @@
             // 
             cbDevice.FormattingEnabled = true;
             cbDevice.Items.AddRange(new object[] { "cuda", "cpu" });
-            cbDevice.Location = new Point(1434, 801);
+            cbDevice.Location = new Point(1293, 946);
             cbDevice.Name = "cbDevice";
             cbDevice.Size = new Size(121, 23);
             cbDevice.TabIndex = 17;
@@ -304,7 +307,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(1434, 783);
+            label2.Location = new Point(1293, 928);
             label2.Name = "label2";
             label2.Size = new Size(91, 15);
             label2.TabIndex = 18;
@@ -312,7 +315,7 @@
             // 
             // nudSeed
             // 
-            nudSeed.Location = new Point(1432, 540);
+            nudSeed.Location = new Point(1667, 772);
             nudSeed.Name = "nudSeed";
             nudSeed.Size = new Size(120, 23);
             nudSeed.TabIndex = 19;
@@ -321,7 +324,7 @@
             // 
             // nudNumSteps
             // 
-            nudNumSteps.Location = new Point(1432, 569);
+            nudNumSteps.Location = new Point(1667, 801);
             nudNumSteps.Name = "nudNumSteps";
             nudNumSteps.Size = new Size(120, 23);
             nudNumSteps.TabIndex = 20;
@@ -329,7 +332,7 @@
             // 
             // nudGuidanceScale
             // 
-            nudGuidanceScale.Location = new Point(1435, 599);
+            nudGuidanceScale.Location = new Point(1670, 831);
             nudGuidanceScale.Name = "nudGuidanceScale";
             nudGuidanceScale.Size = new Size(120, 23);
             nudGuidanceScale.TabIndex = 21;
@@ -338,7 +341,7 @@
             // 
             cbVoice.FormattingEnabled = true;
             cbVoice.Items.AddRange(new object[] { "Hans", "Michael", "Stefan", "German" });
-            cbVoice.Location = new Point(1435, 699);
+            cbVoice.Location = new Point(1670, 931);
             cbVoice.Name = "cbVoice";
             cbVoice.Size = new Size(121, 23);
             cbVoice.TabIndex = 22;
@@ -346,14 +349,14 @@
             // 
             // nudSpeed
             // 
-            nudSpeed.Location = new Point(1436, 634);
+            nudSpeed.Location = new Point(1671, 866);
             nudSpeed.Name = "nudSpeed";
             nudSpeed.Size = new Size(120, 23);
             nudSpeed.TabIndex = 23;
             // 
             // nudPitch
             // 
-            nudPitch.Location = new Point(1436, 663);
+            nudPitch.Location = new Point(1671, 895);
             nudPitch.Name = "nudPitch";
             nudPitch.Size = new Size(120, 23);
             nudPitch.TabIndex = 24;
@@ -362,17 +365,50 @@
             // 
             cbPrecision.FormattingEnabled = true;
             cbPrecision.Items.AddRange(new object[] { "fp16", "fp32" });
-            cbPrecision.Location = new Point(1434, 840);
+            cbPrecision.Location = new Point(1293, 975);
             cbPrecision.Name = "cbPrecision";
             cbPrecision.Size = new Size(121, 23);
             cbPrecision.TabIndex = 25;
             cbPrecision.Text = "fp16";
             // 
+            // btKategorisierer
+            // 
+            btKategorisierer.Location = new Point(1180, 489);
+            btKategorisierer.Name = "btKategorisierer";
+            btKategorisierer.Size = new Size(218, 23);
+            btKategorisierer.TabIndex = 26;
+            btKategorisierer.Text = "Alle Modelle Kategorisieren";
+            btKategorisierer.UseVisualStyleBackColor = true;
+            btKategorisierer.Click += btKategorisierer_Click;
+            // 
+            // btDownloadModelBeta
+            // 
+            btDownloadModelBeta.Location = new Point(1650, 502);
+            btDownloadModelBeta.Name = "btDownloadModelBeta";
+            btDownloadModelBeta.Size = new Size(75, 23);
+            btDownloadModelBeta.TabIndex = 28;
+            btDownloadModelBeta.Text = "download...";
+            btDownloadModelBeta.UseVisualStyleBackColor = true;
+            btDownloadModelBeta.Click += btDownloadModelBeta_Click;
+            // 
+            // cbHFRepoId
+            // 
+            cbHFRepoId.FormattingEnabled = true;
+            cbHFRepoId.Items.AddRange(new object[] { "Wan-AI/Wan2.1-T2V-14B", "stepfun-ai/stepvideo-t2v" });
+            cbHFRepoId.Location = new Point(1436, 502);
+            cbHFRepoId.Name = "cbHFRepoId";
+            cbHFRepoId.Size = new Size(208, 23);
+            cbHFRepoId.TabIndex = 29;
+            cbHFRepoId.Text = "Wan-AI/Wan2.1-T2V-14B";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1684, 1031);
+            ClientSize = new Size(1803, 1031);
+            Controls.Add(cbHFRepoId);
+            Controls.Add(btDownloadModelBeta);
+            Controls.Add(btKategorisierer);
             Controls.Add(cbPrecision);
             Controls.Add(nudPitch);
             Controls.Add(nudSpeed);
@@ -452,5 +488,8 @@
         private NumericUpDown nudSpeed;
         private NumericUpDown nudPitch;
         private ComboBox cbPrecision;
+        private Button btKategorisierer;
+        private Button btDownloadModelBeta;
+        private ComboBox cbHFRepoId;
     }
 }
