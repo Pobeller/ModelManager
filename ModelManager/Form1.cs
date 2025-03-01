@@ -26,6 +26,11 @@ namespace ModelManager
         {
             InitializeComponent();
 
+
+            // Initialize ListView sorting
+            Utils.InitializeListViewSorting(lvModelle);
+
+
             // Guidance Scale Control
             nudGuidanceScale.DecimalPlaces = 1;
             nudGuidanceScale.Minimum = 1.0m;
@@ -87,39 +92,6 @@ namespace ModelManager
 
             lvModelle.Sort();
         }
-
-
-        //// Sortierklasse für ListView (nicht generisch)
-        //class ListViewItemComparer : IComparer
-        //{
-        //    private int col;
-
-        //    public ListViewItemComparer(int column)
-        //    {
-        //        col = column;
-        //    }
-
-        //    public int Compare(object? x, object? y)
-        //    {
-        //        // Überprüfe, ob die Objekte ListViewItems sind
-        //        var itemX = x as ListViewItem;
-        //        var itemY = y as ListViewItem;
-
-        //        if (itemX == null || itemY == null)
-        //            return 0; // Fallback, falls die Objekte keine ListViewItems sind
-
-        //        // Vergleiche die SubItem-Texte nach der gewünschten Spalte
-        //        return string.Compare(
-        //            itemX.SubItems[col].Text,
-        //            itemY.SubItems[col].Text,
-        //            StringComparison.OrdinalIgnoreCase
-        //        );
-        //    }
-        //}
-
-
-
-
 
 
 
@@ -375,7 +347,7 @@ namespace ModelManager
 
         public class ModelItem
         {
-            public string[] Values { get; set; }
+            public string[] Values { get; set; } = Array.Empty<string>();
         }
 
         private async void btSendCommand_Click(object sender, EventArgs e)
@@ -1630,6 +1602,21 @@ Output: {parameters["output"]}";
             public bool IsAvailable { get; set; }
             public decimal VRamGB { get; set; }
         }
+
+        private void lvModelle_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Sortiere die ListView nach der angeklickten Spalte
+            lvModelle.ListViewItemSorter = new ListViewItemComparer(e.Column);
+            lvModelle.Sort();  //Er muss auf und absteigend sortiern können
+        }
+
+
+
+
+
+
+
+
     }
 }
 

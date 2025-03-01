@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 namespace ModelManager
 {
     public class DynamischeFormen
-
     {
-
         public static void CreatePreviewForm(string imagePath, TimeSpan duration)
         {
             var form = new Form { Text = "Bildvorschau", Width = 800, Height = 600 };
@@ -45,9 +43,6 @@ namespace ModelManager
             form.Controls.Add(flowPanel);
             form.Show();
         }
-
-
-
     }
 
     public class EditCommentForm : Form
@@ -55,7 +50,7 @@ namespace ModelManager
         private readonly TextBox _textBox;
         private readonly ListBox _suggestionList;
         private List<string> _availableComments = new();
-        public string Comment { get; private set; }
+        public string Comment { get; private set; } = string.Empty;
 
         public EditCommentForm(string initialComment, ListView listView)
         {
@@ -91,17 +86,17 @@ namespace ModelManager
                 Dock = DockStyle.Fill,
                 RowCount = 2,
                 RowStyles =
-            {
-                new RowStyle(SizeType.Percent, 100),
-                new RowStyle(SizeType.AutoSize)
-            }
+                    {
+                        new RowStyle(SizeType.Percent, 100),
+                        new RowStyle(SizeType.AutoSize)
+                    }
             };
 
             // Event-Handler
             _textBox.TextChanged += (s, e) => UpdateSuggestions();
             _textBox.KeyDown += HandleKeyNavigation;
             _suggestionList.Click += SelectSuggestion;
-            _suggestionList.KeyDown += SelectSuggestion;
+            _suggestionList.KeyDown += HandleKeyNavigation;
 
             panel.Controls.Add(_textBox, 0, 0);
             panel.Controls.Add(_suggestionList, 0, 1);
@@ -123,13 +118,6 @@ namespace ModelManager
             StartPosition = FormStartPosition.CenterParent;
         }
 
-
-
-
-
-
-
-
         private void UpdateSuggestions()
         {
             var currentText = _textBox.Text;
@@ -147,7 +135,7 @@ namespace ModelManager
             _suggestionList.Items.AddRange(suggestions.ToArray());
         }
 
-        private void HandleKeyNavigation(object sender, KeyEventArgs e)
+        private void HandleKeyNavigation(object? sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -165,7 +153,7 @@ namespace ModelManager
             }
         }
 
-        private void SelectSuggestion(object sender, EventArgs e)
+        private void SelectSuggestion(object? sender, EventArgs e)
         {
             if (_suggestionList.SelectedItem == null) return;
 
@@ -173,23 +161,7 @@ namespace ModelManager
             _textBox.Focus();
             _suggestionList.Visible = false;
         }
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    } 
+    }
 
 
 

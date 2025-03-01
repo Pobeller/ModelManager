@@ -88,6 +88,7 @@
             lvModelle.TabIndex = 0;
             lvModelle.UseCompatibleStateImageBehavior = false;
             lvModelle.View = View.Details;
+            lvModelle.ColumnClick += lvModelle_ColumnClick;
             lvModelle.DoubleClick += lvModelle_DoubleClick;
             // 
             // columnHeader1
